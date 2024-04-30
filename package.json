@@ -10,6 +10,11 @@
     "preview": "vite preview",
     "prepare": "husky"
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint --edit $HUSKY_GIT_PARAMS"
+    }
+  },
   "dependencies": {
     "@nextui-org/react": "^2.3.6",
     "autoprefixer": "^10.4.19",

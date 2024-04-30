@@ -1,0 +1,2 @@
+#!/bin/sh
+exec < /dev/tty && commitlint --edit "$1"
