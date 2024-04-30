@@ -12,10 +12,12 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint --edit $HUSKY_GIT_PARAMS"
+      "pre-commit": "npm run lint",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "dependencies": {
+    "@commitlint/types": "^19.0.3",
     "@nextui-org/react": "^2.3.6",
     "autoprefixer": "^10.4.19",
     "eslint-import-resolver-typescript": "^3.6.1",
