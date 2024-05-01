@@ -46,8 +46,6 @@ const CreateTaskForm = ({
   const onSubmit: SubmitHandler<CreateTaskFormField> = (
     data: CreateTaskFormField
   ) => {
-    console.log(data);
-
     handleCreateTask(
       {
         date: data.date,
@@ -100,18 +98,16 @@ const CreateTaskForm = ({
             <Controller
               control={control}
               name="title"
-              defaultValue={defaultForm?.title}
-              render={({ field: { onChange, onBlur, value } }) => (
+              defaultValue=""
+              render={({ field }) => (
                 <Input
                   autoFocus
                   label="Title"
                   placeholder="Enter your title"
                   id="title"
                   variant="bordered"
-                  onChange={onChange}
-                  onBlur={onBlur}
                   isRequired
-                  value={value}
+                  {...field}
                 />
               )}
             />
@@ -119,16 +115,14 @@ const CreateTaskForm = ({
             <Controller
               control={control}
               name="date"
-              defaultValue={defaultForm?.date}
-              render={({ field: { onChange, onBlur, value } }) => (
+              defaultValue=""
+              render={({ field }) => (
                 <Input
                   label="Due date"
                   variant="bordered"
                   id="date"
                   type="date"
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  value={value}
+                  {...field}
                 />
               )}
             />
@@ -136,16 +130,14 @@ const CreateTaskForm = ({
             <Controller
               control={control}
               name="description"
-              defaultValue={defaultForm?.description}
-              render={({ field: { onChange, onBlur, value } }) => (
+              defaultValue=""
+              render={({ field }) => (
                 <Textarea
                   id="description"
                   label="Description"
                   placeholder="Enter your description"
                   variant="bordered"
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  value={value}
+                  {...field}
                 />
               )}
             />

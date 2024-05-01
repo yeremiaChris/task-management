@@ -25,7 +25,7 @@ const HomeTabs = () => {
         : [...prevState, payload];
     });
 
-    toast.success(`Success ${detailTask ? "update" : "create"} task`);
+    toast.success(`Success ${index ? "update" : "create"} task`);
   };
 
   const disclosure = useDisclosure();

@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Platform } from "./pages/home/platform";
+import { Platform } from "./pages/platform";
 function App() {
   return (
     <BrowserRouter>

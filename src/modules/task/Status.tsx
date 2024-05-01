@@ -39,6 +39,7 @@ const Status = ({ children }: StatusProps) => {
       <Select
         color={getColor}
         placeholder="Select status"
+        aria-label="status"
         defaultSelectedKeys={["Todo"]}
         size="sm"
         className="w-24"
