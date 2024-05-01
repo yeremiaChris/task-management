@@ -1,30 +1,36 @@
-# React + TypeScript + Vite
+# Task Management App with React, Vite, and TypeScript
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a task management application built using React, Vite, TypeScript nad NextUI for a smooth development experience
 
-Currently, two official plugins are available:
+## Feature
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **View Tasks**: Display a list of tasks with their titles,descriptions, due dates, and completion status.
 
-## Expanding the ESLint configuration
+2. **Add Task**: Users can add new tasks by providing a title and optional due date.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+3. **Edit Task**P: Users can edit existing tasks, updating their titles or due dates.
 
-- Configure the top-level `parserOptions` property like this:
+4. **Delete Task**: Users can edit existing tasks, updating their titles or due dates.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+5. **Mark task (Todo, Doing, Done)**: Mark Task as Complete (done), Doing and Todo
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Install tooling
+
+Make sure you have the following installed
+
+    - NodeJS (v18 or later)
+    - PNPM
+
+## Installation
+
+1. Clone the Repository: `git clone https://github.com/yeremiaChris/task-management.git`
+2. Navigate to the Project Directory: `cd task-management`
+3. Install Dependencies: `pnpm install`
+4. Start the Development Server: `pnpm dev`
+
+## Technologies Used
+
+**React**: A powerful JavaScript library for creating user interfaces.
+**Vite**: A lightning-fast development server and build tool for modern web applications.
+**TypeScript**: A superset of JavaScript adding optional static typing for enhanced code maintainability.
+**NextUI**: A beautiful, fast, and modern React UI library, used for building sleek and responsive components in this application.
