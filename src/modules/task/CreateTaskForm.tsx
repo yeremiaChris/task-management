@@ -86,7 +86,7 @@ const CreateTaskForm = ({
       </Button>
       <Modal
         isOpen={isOpen}
-        placement="top-center"
+        placement="auto"
         as="form"
         onSubmit={handleSubmit(onSubmit)}
         hideCloseButton
