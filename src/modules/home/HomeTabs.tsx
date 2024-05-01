@@ -3,6 +3,7 @@ import TaskCard, { StatusType, TaskCardProps } from "../task/TaskCard";
 import { FiTrash2, FiEdit } from "react-icons/fi";
 import { Button, useDisclosure } from "@nextui-org/react";
 import CreateTaskForm, { CreateTaskFormField } from "../task/CreateTaskForm";
+import { toast } from "react-toastify";
 export interface UpdateStatus {
   index: number;
   status: StatusType;
@@ -23,6 +24,8 @@ const HomeTabs = () => {
           )
         : [...prevState, payload];
     });
+
+    toast.success(`Success ${detailTask ? "update" : "create"} task`);
   };
 
   const disclosure = useDisclosure();
@@ -38,7 +41,7 @@ const HomeTabs = () => {
         />
 
         {!tasks.length ? (
-          <p className="text-center">No task to display.</p>
+          <p className="text-center my-5">No task to display.</p>
         ) : null}
 
         {tasks.length ? (
@@ -50,11 +53,12 @@ const HomeTabs = () => {
                     isIconOnly
                     size="sm"
                     variant="bordered"
-                    onClick={() =>
+                    onClick={() => {
                       setTask((prevState) => {
                         return prevState.filter((_, idx) => index !== idx);
-                      })
-                    }
+                      });
+                      toast.success(`Success delete task`);
+                    }}
                   >
                     <FiTrash2 />
                   </Button>

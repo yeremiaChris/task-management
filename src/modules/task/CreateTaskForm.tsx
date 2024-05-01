@@ -38,7 +38,7 @@ const CreateTaskForm = ({
   handleCreateTask,
   ...modalProps
 }: CreateTaskForm) => {
-  const { isOpen, onOpen, onClose, onOpenChange } = disclosureProps;
+  const { isOpen, onOpen, onClose } = disclosureProps;
 
   const { handleSubmit, control, reset, setValue } =
     useForm<CreateTaskFormField>();
@@ -46,6 +46,8 @@ const CreateTaskForm = ({
   const onSubmit: SubmitHandler<CreateTaskFormField> = (
     data: CreateTaskFormField
   ) => {
+    console.log(data);
+
     handleCreateTask(
       {
         date: data.date,
@@ -84,10 +86,10 @@ const CreateTaskForm = ({
       </Button>
       <Modal
         isOpen={isOpen}
-        onOpenChange={onOpenChange}
         placement="top-center"
         as="form"
         onSubmit={handleSubmit(onSubmit)}
+        hideCloseButton
         {...modalProps}
       >
         <ModalContent>
@@ -149,6 +151,9 @@ const CreateTaskForm = ({
             />
           </ModalBody>
           <ModalFooter>
+            <Button variant="bordered" type="button" onClick={onClose}>
+              Close
+            </Button>
             <Button color="primary" type="submit">
               {defaultForm ? "Update" : "Submit"}
             </Button>
