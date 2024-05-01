@@ -1,64 +1,77 @@
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 import TaskCard, { StatusType, TaskCardProps } from "../task/TaskCard";
-import CreateTaskForm from "../task/CreateTaskForm";
 import { FiTrash2, FiEdit } from "react-icons/fi";
-import { Button } from "@nextui-org/react";
+import { Button, useDisclosure } from "@nextui-org/react";
+import CreateTaskForm, { CreateTaskFormField } from "../task/CreateTaskForm";
 export interface UpdateStatus {
   index: number;
   status: StatusType;
 }
 
-const initialValue: TaskCardProps = {
-  title: "[FE] Slicing task ui",
-  description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,
-          vel dolorem reiciendis repellendus consectetur quidem modi, ratione,
-          mollitia magni fugiat autem iure vitae. Dolor laboriosam est natus
-          eaque tempore ex.`,
-  date: new Date().toLocaleDateString(),
-};
-
 const HomeTabs = () => {
-  const [tasks, setTask] = useState<TaskCardProps[]>([initialValue]);
+  const [tasks, setTask] = useState<TaskCardProps[]>([]);
 
-  const tasksValue = useMemo(() => tasks, [tasks]);
+  const [detailTask, setDetailTask] = useState<CreateTaskFormField | null>(
+    null
+  );
 
-  const createTask = useCallback((payload: TaskCardProps) => {
+  const createTask = (payload: TaskCardProps, index?: string) => {
     setTask((prevState) => {
-      return [...prevState, payload];
+      return index
+        ? prevState.map((item, idx) =>
+            parseInt(index) === idx ? payload : item
+          )
+        : [...prevState, payload];
     });
-  }, []);
-  const deleteTask = useCallback((idx: number) => {
-    setTask((prevState) => {
-      return prevState.filter((_, index) => index !== idx);
-    });
-  }, []);
+  };
+
+  const disclosure = useDisclosure();
 
   return (
     <>
       <div className="mt-4 grid gap-3">
         <CreateTaskForm
           handleCreateTask={createTask}
-          buttonProps={{ title: "Create Task" }}
+          disclosureProps={disclosure}
+          defaultForm={detailTask}
+          resetDetail={() => setDetailTask(null)}
         />
 
-        {!tasksValue.length ? (
+        {!tasks.length ? (
           <p className="text-center">No task to display.</p>
         ) : null}
 
-        {tasksValue.length ? (
+        {tasks.length ? (
           <div className="grid md:grid-cols-3 gap-3">
-            {tasksValue.map((task, index) => (
+            {tasks.map((task, index) => (
               <TaskCard key={`${index}-task`} {...task}>
                 <div className="flex gap-2">
                   <Button
                     isIconOnly
                     size="sm"
                     variant="bordered"
-                    onClick={() => deleteTask(index)}
+                    onClick={() =>
+                      setTask((prevState) => {
+                        return prevState.filter((_, idx) => index !== idx);
+                      })
+                    }
                   >
                     <FiTrash2 />
                   </Button>
-                  <Button isIconOnly size="sm" variant="bordered">
+                  <Button
+                    isIconOnly
+                    size="sm"
+                    variant="bordered"
+                    onClick={() => {
+                      setDetailTask({
+                        title: task.title,
+                        date: task.date as string,
+                        description: task.description,
+                        index: index.toString(),
+                      });
+                      disclosure.onOpen();
+                    }}
+                  >
                     <FiEdit />
                   </Button>
                 </div>

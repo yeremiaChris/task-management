@@ -1,11 +1,4 @@
-import {
-  Code,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Dropdown,
-  DropdownItemProps,
-} from "@nextui-org/react";
+import { DropdownItemProps, Select, SelectItem } from "@nextui-org/react";
 import { StatusType } from "./TaskCard";
 import { useState } from "react";
 
@@ -13,17 +6,6 @@ interface StatusProps {
   children?: React.ReactNode;
 }
 const Status = ({ children }: StatusProps) => {
-  const getColorType = (status?: StatusType) => {
-    switch (status) {
-      case "Todo":
-        return "danger";
-      case "Doing":
-        return "warning";
-      default:
-        return "success";
-    }
-  };
-
   const items: { key: StatusType; dropdownProps: DropdownItemProps }[] = [
     {
       key: "Todo",
@@ -49,29 +31,26 @@ const Status = ({ children }: StatusProps) => {
   ];
 
   const [currentStatus, setCurrentStatus] = useState<StatusType>("Todo");
-
+  const isTodo = currentStatus === "Todo";
+  const isDoing = currentStatus === "Doing";
+  const getColor = isTodo ? "danger" : isDoing ? "warning" : "success";
   return (
     <div className="flex justify-between items-center">
-      <Dropdown>
-        <DropdownTrigger>
-          <Code as="button" color={getColorType(currentStatus)}>
-            {currentStatus}
-          </Code>
-        </DropdownTrigger>
-        <DropdownMenu aria-label="Dynamic Actions" items={items}>
-          {(item) => (
-            <DropdownItem
-              key={item.key}
-              {...item.dropdownProps}
-              onClick={() => {
-                setCurrentStatus(item.key);
-              }}
-            >
-              {item.key}
-            </DropdownItem>
-          )}
-        </DropdownMenu>
-      </Dropdown>
+      <Select
+        color={getColor}
+        placeholder="Select status"
+        defaultSelectedKeys={["Todo"]}
+        size="sm"
+        className="w-24"
+        value={currentStatus}
+        onChange={(value) => setCurrentStatus(value.target.value as StatusType)}
+      >
+        {items.map((item) => (
+          <SelectItem key={item.key} value={item.key}>
+            {item.key}
+          </SelectItem>
+        ))}
+      </Select>
       {children}
     </div>
   );

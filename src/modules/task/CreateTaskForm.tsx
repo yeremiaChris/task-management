@@ -5,47 +5,82 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  useDisclosure,
   Input,
+  ButtonProps,
+  UseDisclosureProps,
   ModalProps,
   Textarea,
-  ButtonProps,
 } from "@nextui-org/react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { TaskCardProps } from "./TaskCard";
+import { useEffect } from "react";
 
-type Inputs = {
+export type CreateTaskFormField = {
   title: string;
   date: string;
+  index?: string;
   description: string;
 };
 
 interface CreateTaskForm extends Partial<ModalProps> {
-  handleCreateTask: (payload: TaskCardProps) => void;
   buttonProps?: ButtonProps;
+  disclosureProps: UseDisclosureProps & { onOpenChange?: () => void };
+  defaultForm?: CreateTaskFormField | null;
+  resetDetail: () => void;
+  handleCreateTask: (props: TaskCardProps, index?: string) => void;
 }
 
 const CreateTaskForm = ({
-  handleCreateTask,
+  defaultForm,
   buttonProps,
+  disclosureProps,
+  resetDetail,
+  handleCreateTask,
   ...modalProps
 }: CreateTaskForm) => {
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onClose, onOpenChange } = disclosureProps;
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { handleSubmit, control, reset, setValue } =
+    useForm<CreateTaskFormField>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data: Inputs) => {
-    handleCreateTask(data);
-    onClose();
+  const onSubmit: SubmitHandler<CreateTaskFormField> = (
+    data: CreateTaskFormField
+  ) => {
+    handleCreateTask(
+      {
+        date: data.date,
+        description: data.description,
+        title: data.title,
+      },
+      defaultForm?.index
+    );
+    if (onClose) onClose();
   };
+
+  useEffect(() => {
+    if (defaultForm) {
+      setValue("date", defaultForm.date);
+      setValue("title", defaultForm.title);
+      setValue("description", defaultForm.description);
+    }
+  }, [defaultForm, setValue]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      resetDetail();
+      reset();
+    }
+  }, [isOpen, resetDetail, reset]);
+
   return (
     <>
-      <Button onPress={onOpen} color="primary" {...buttonProps}>
-        {buttonProps?.title}
+      <Button
+        onPress={onOpen}
+        color="primary"
+        {...buttonProps}
+        className="font-bold"
+      >
+        Create Task
       </Button>
       <Modal
         isOpen={isOpen}
@@ -56,42 +91,68 @@ const CreateTaskForm = ({
         {...modalProps}
       >
         <ModalContent>
-          {() => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Create Task
-              </ModalHeader>
-              <ModalBody>
+          <ModalHeader className="flex flex-col gap-1">
+            {defaultForm ? "Update" : "Create"} Task
+          </ModalHeader>
+          <ModalBody>
+            <Controller
+              control={control}
+              name="title"
+              defaultValue={defaultForm?.title}
+              render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   autoFocus
                   label="Title"
                   placeholder="Enter your title"
+                  id="title"
                   variant="bordered"
-                  {...register("title", { required: true })}
+                  onChange={onChange}
+                  onBlur={onBlur}
                   isRequired
-                  aria-invalid={errors.title ? "true" : "false"}
+                  value={value}
                 />
+              )}
+            />
+
+            <Controller
+              control={control}
+              name="date"
+              defaultValue={defaultForm?.date}
+              render={({ field: { onChange, onBlur, value } }) => (
                 <Input
                   label="Due date"
                   variant="bordered"
+                  id="date"
                   type="date"
-                  {...register("date")}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
                 />
+              )}
+            />
+
+            <Controller
+              control={control}
+              name="description"
+              defaultValue={defaultForm?.description}
+              render={({ field: { onChange, onBlur, value } }) => (
                 <Textarea
-                  {...register("description")}
+                  id="description"
                   label="Description"
                   placeholder="Enter your description"
-                  type="description"
                   variant="bordered"
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
                 />
-              </ModalBody>
-              <ModalFooter>
-                <Button color="primary" type="submit">
-                  Submit
-                </Button>
-              </ModalFooter>
-            </>
-          )}
+              )}
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" type="submit">
+              {defaultForm ? "Update" : "Submit"}
+            </Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
