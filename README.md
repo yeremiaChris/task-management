@@ -8,7 +8,7 @@ This project is a task management application built using React, Vite, TypeScrip
 
 2. **Add Task**: Users can add new tasks by providing a title and optional due date.
 
-3. **Edit Task**P: Users can edit existing tasks, updating their titles or due dates.
+3. **Edit Task**: Users can edit existing tasks, updating their titles or due dates.
 
 4. **Delete Task**: Users can edit existing tasks, updating their titles or due dates.
 
@@ -30,7 +30,7 @@ Make sure you have the following installed
 
 ## Technologies Used
 
-**React**: A powerful JavaScript library for creating user interfaces.
-**Vite**: A lightning-fast development server and build tool for modern web applications.
-**TypeScript**: A superset of JavaScript adding optional static typing for enhanced code maintainability.
-**NextUI**: A beautiful, fast, and modern React UI library, used for building sleek and responsive components in this application.
+- **React**: A powerful JavaScript library for creating user interfaces.
+- **Vite**: A lightning-fast development server and build tool for modern web applications.
+- **TypeScript**: A superset of JavaScript adding optional static typing for enhanced code maintainability.
+- **NextUI**: A beautiful, fast, and modern React UI library, used for building sleek and responsive components in this application.
