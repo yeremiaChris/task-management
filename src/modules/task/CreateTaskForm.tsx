@@ -46,6 +46,7 @@ const CreateTaskForm = forwardRef(
     const handleClose = () => {
       onClose();
       reset();
+      setDetailTask(null);
     };
 
     const onSubmit: SubmitHandler<CreateTaskFormField> = (
