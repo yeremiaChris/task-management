@@ -44,9 +44,9 @@ const CreateTaskForm = forwardRef(
       useForm<CreateTaskFormField>();
 
     const handleClose = () => {
-      onClose();
-      reset();
       setDetailTask(null);
+      reset();
+      onClose();
     };
 
     const onSubmit: SubmitHandler<CreateTaskFormField> = (
@@ -60,7 +60,13 @@ const CreateTaskForm = forwardRef(
         },
         detailTask?.index
       );
-      if (onClose) onClose();
+      onClose();
+    };
+
+    const handleOpen = () => {
+      onOpen();
+      setDetailTask(null);
+      reset();
     };
 
     useImperativeHandle(ref, () => ({
@@ -76,7 +82,7 @@ const CreateTaskForm = forwardRef(
     return (
       <>
         <Button
-          onPress={onOpen}
+          onPress={handleOpen}
           color="primary"
           {...buttonProps}
           className="font-bold"
